@@ -1,0 +1,35 @@
+# CREASE — free deploy blueprint for Render (https://render.com).
+# Hosts the Next.js app on Render's free web tier. Bring your own free
+# managed Postgres (Neon) and Redis (Upstash) — see DEPLOY.md.
+#
+# One-time: Render Dashboard → New → Blueprint → connect this repo.
+# Fill the sync:false env vars, then run the seed once from the service Shell:
+#   npm run db:seed
+services:
+  - type: web
+    name: crease
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    # migrate the DB, then build. (Seed once manually after first deploy.)
+    buildCommand: npm ci && npx prisma migrate deploy && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DEFAULT_TENANT_SLUG
+        value: default
+      - key: AUTH_SECRET
+        generateValue: true
+      # ── fill these in the Render dashboard (sync:false = not stored in git) ──
+      - key: DATABASE_URL          # Neon pooled connection string (?sslmode=require)
+        sync: false
+      - key: REDIS_URL             # Upstash Redis URL (rediss://...) — optional but recommended
+        sync: false
+      - key: NEXTAUTH_URL          # https://<your-service>.onrender.com
+        sync: false
+      - key: NEXT_PUBLIC_APP_URL   # https://<your-service>.onrender.com
+        sync: false
