@@ -1,0 +1,16 @@
+# CREASE — Netlify deploy config (free, serverless, no cold-sleep).
+# Netlify's Next.js runtime renders the App Router on serverless/edge functions.
+#
+# Setup: Netlify → Add new site → Import from Git → pick Novarispc/retailapp2.
+# Set env vars (see DEPLOY.md), deploy. Seed the DB once from your machine
+# pointing DATABASE_URL at Neon (Netlify has no shell):  npm run db:seed
+
+[build]
+  command = "npm ci && npx prisma migrate deploy && npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
