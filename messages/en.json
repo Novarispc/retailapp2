@@ -1,0 +1,34 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "account": "Account",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "search": "Search products",
+    "cart": "Cart"
+  },
+  "hero": {
+    "badge": "Jodhpur's premier cricket & sports store",
+    "titleA": "Built for",
+    "titleB": "the pitch",
+    "subtitle": "Cricket bats, combos, shoes and sports accessories — where the trust builds. Serving players across India.",
+    "explore": "Shop Now",
+    "assistant": "Ask AI Assistant",
+    "statProducts": "Products",
+    "statRating": "Avg rating",
+    "statSupport": "Trusted brands"
+  },
+  "home": {
+    "shopByCategory": "Shop by category",
+    "featured": "Featured products",
+    "viewAll": "View all"
+  },
+  "footer": {
+    "tagline": "From local nets to big matches — trusted cricket gear for every player",
+    "shop": "Shop",
+    "account": "Account",
+    "company": "Company",
+    "rights": "ASPORTS ZONE · Sardarpura, Jodhpur, Rajasthan."
+  }
+}

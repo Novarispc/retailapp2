@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/*
+  CREASE — energetic sport-tech design system.
+  Near-black pitch, volt-lime energy, electric-cyan secondary, ball-red signal.
+  Built for an athletic-tech retail brand: high contrast, motion-forward, condensed display type.
+*/
+:root {
+  --background: #07090c;
+  --surface: #0e1218;
+  --surface-2: #141a22;
+  --surface-3: #1b222d;
+  --foreground: #f2f5f8;
+  --muted: #8a93a2;
+  --border: #1d2531;
+  --border-strong: #2c3744;
+
+  /* Volt-lime is the brand energy. Cyan is the cool secondary. Red is the ball / signal. */
+  --accent: #c2ff36;        /* volt lime — primary CTA + energy */
+  --accent-2: #9be600;      /* deeper lime for gradients */
+  --accent-3: #34e5ff;      /* electric cyan — secondary accent */
+  --energy: #c2ff36;
+  --on-accent: #06120a;     /* text/icon on lime fills */
+  --signal: #ff453a;        /* ball red — sale / destructive */
+
+  --success: #34d399;
+  --danger: #ff453a;
+  --warning: #fbbf24;
+  --ring: #c2ff36;
+
+  /* Elevation — crisp, athletic, not soft. */
+  --elev-1: 0 1px 2px -1px rgba(0, 0, 0, 0.5), 0 2px 10px -4px rgba(0, 0, 0, 0.55);
+  --elev-2: 0 6px 16px -6px rgba(0, 0, 0, 0.55), 0 16px 40px -14px rgba(0, 0, 0, 0.6);
+  --elev-3: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 36px 80px -28px rgba(0, 0, 0, 0.7);
+
+  /* Motion — fast, snappy, sport. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur: 220ms;
+  --dur-slow: 380ms;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-energy: var(--energy);
+  --color-signal: var(--signal);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-barlow), system-ui, sans-serif;
+  --font-display: var(--font-barlow-condensed), var(--font-barlow), system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", monospace;
+  --radius: 0.875rem;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Condensed display type — the sport-tech signature. */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  color: var(--accent);
+}
+
+/* Ambient field — a faint pitch glow + grid, drifts slowly for living depth. */
+.aurora-bg {
+  position: relative;
+}
+.aurora-bg::before {
+  content: "";
+  position: fixed;
+  inset: -25% -15% auto -15%;
+  height: 85vh;
+  background:
+    radial-gradient(42% 52% at 16% 12%, rgba(194, 255, 54, 0.12), transparent 70%),
+    radial-gradient(46% 56% at 84% 6%, rgba(52, 229, 255, 0.10), transparent 70%),
+    radial-gradient(36% 46% at 60% 40%, rgba(194, 255, 54, 0.06), transparent 70%);
+  filter: blur(28px);
+  z-index: -2;
+  pointer-events: none;
+  animation: aurora-drift 26s var(--ease-in-out) infinite;
+}
+/* Pitch grid — subtle technical lines, kills flat banding. */
+.aurora-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+  z-index: -2;
+  pointer-events: none;
+}
+@keyframes aurora-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3%, 2%, 0) scale(1.06); }
+}
+
+@layer components {
+  /* Glass surface — translucent panel, crisp top highlight. */
+  .glass {
+    position: relative;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 42%),
+      color-mix(in oklab, var(--surface) 78%, transparent);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+    box-shadow: var(--elev-1), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* Premium card lift */
+.card-lift {
+  transition: transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+  will-change: transform;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elev-3);
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
+}
+
+.elev-1 { box-shadow: var(--elev-1); }
+.elev-2 { box-shadow: var(--elev-2); }
+.elev-3 { box-shadow: var(--elev-3); }
+
+/* Light sweep on hover — parent needs .group + overflow-hidden */
+.shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.14) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.7s var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+.group:hover .shine::before { transform: translateX(120%); }
+
+.tnum { font-variant-numeric: tabular-nums; }
+
+.gradient-text {
+  background: linear-gradient(100deg, var(--accent) 10%, #e6ff8a 50%, var(--accent-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--surface);
+}
+.gradient-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, var(--accent), var(--accent-3), transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-accent {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent),
+    0 8px 44px -12px color-mix(in oklab, var(--accent) 55%, transparent);
+}
+
+/* Diagonal accent stripe — sport-tech detailing for bands/banners. */
+.stripe-accent {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in oklab, var(--accent) 14%, transparent) 0,
+    color-mix(in oklab, var(--accent) 14%, transparent) 2px,
+    transparent 2px,
+    transparent 11px
+  );
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float { animation: float-slow 6s ease-in-out infinite; }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 80%, transparent);
+  color: var(--on-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aurora-bg::before { animation: none; }
+}
