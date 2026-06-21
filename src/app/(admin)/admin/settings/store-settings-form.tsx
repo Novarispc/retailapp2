@@ -25,8 +25,10 @@ export function StoreSettingsForm({ initial }: { initial: StoreProfile }) {
 
   const currentLogo = preview ?? initial.logoUrl ?? "/logo.png";
 
+  const hasStorage = !!(process.env.NEXT_PUBLIC_BLOB_ENABLED === "true" || process.env.NEXT_PUBLIC_S3_ENABLED === "true");
+
   return (
-    <form action={action} encType="multipart/form-data" className="space-y-6">
+    <form action={action} className="space-y-6">
 
       {/* ── Logo ── */}
       <div className="glass rounded-2xl p-6">
@@ -36,16 +38,22 @@ export function StoreSettingsForm({ initial }: { initial: StoreProfile }) {
             <Image src={currentLogo} alt="Logo preview" fill className="object-contain p-1" />
           </div>
           <div className="flex-1">
-            <label className="block text-sm font-medium text-muted mb-1">Upload new logo</label>
-            <input
-              ref={fileRef}
-              name="logoFile"
-              type="file"
-              accept="image/png,image/jpeg,image/svg+xml,image/webp"
-              onChange={handleLogoChange}
-              className="block w-full text-sm text-muted file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--surface-2)] file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-foreground hover:file:bg-[var(--surface)]"
-            />
-            <p className="mt-1 text-xs text-muted">PNG, JPG, SVG or WebP. Leave blank to keep current logo.</p>
+            {hasStorage ? (
+              <>
+                <label className="block text-sm font-medium text-muted mb-1">Upload new logo</label>
+                <input
+                  ref={fileRef}
+                  name="logoFile"
+                  type="file"
+                  accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                  onChange={handleLogoChange}
+                  className="block w-full text-sm text-muted file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--surface-2)] file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-foreground hover:file:bg-[var(--surface)]"
+                />
+                <p className="mt-1 text-xs text-muted">PNG, JPG, SVG or WebP. Leave blank to keep current logo.</p>
+              </>
+            ) : (
+              <p className="text-sm text-muted">Logo upload requires object storage (S3/R2/Blob). Configure <code className="text-xs bg-[var(--surface-2)] px-1 rounded">NEXT_PUBLIC_BLOB_ENABLED=true</code> after setting up storage.</p>
+            )}
           </div>
         </div>
       </div>
